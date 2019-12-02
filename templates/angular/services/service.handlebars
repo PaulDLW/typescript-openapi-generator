@@ -1,0 +1,48 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Configuration } from '../configuration';
+{{#this.imports}}
+import { {{this.name}} } from '{{this.path}}';
+{{/this.imports}}
+
+@Injectable()
+export class {{className}} {
+  constructor(
+    private readonly _httpClient: HttpClient,
+    private readonly _config: Configuration
+  ) { }
+
+{{#paths}}
+  public {{this.methodName}}({{#this.parameters}}{{this.name}}{{#unless this.required}}?{{/unless}}: {{this.type}}{{#unless @last}}, {{/unless}}{{/this.parameters}}) {
+  {{#this.parameters}}
+	{{#if this.required}}
+    if ({{this.name}} === null || {{this.name}} === undefined) {
+      throw new Error(
+        'Required parameter {{this.name}} was null or undefined when calling {{../this.methodName}}.'
+      );
+    }
+	
+	{{/if}}
+	{{/this.parameters}}
+    const requestOptions = this.getDefaultRequestOptions();
+
+    return this._httpClient.{{this.httpVerb}}<{{this.responseType}}>(
+      `${this.getBasePath()}{{this.endpoint}}`, {{#if this.bodyObject}}{{this.bodyObject}}, {{/if}}requestOptions
+    );
+  }
+  
+{{/paths}}
+  private getBasePath() {
+    return `${this._config.basePath}`;
+  }
+
+  private getDefaultRequestOptions() {
+    return {
+      withCredentials: this._config.withCredentials,
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json'
+      }
+    };
+  }
+}

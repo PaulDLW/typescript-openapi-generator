@@ -1,0 +1,12 @@
+{{#if modelReferences.length}}
+import {
+{{#modelReferences}}
+  {{this}}{{#unless @last}},{{/unless}}
+{{/modelReferences}}
+} from './index'
+
+{{/if}}export interface {{ className }} {
+{{#properties}}
+  {{name}}: {{type}};
+{{/properties}}
+}
