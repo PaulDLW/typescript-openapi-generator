@@ -23,6 +23,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = require("path");
 var fs_1 = require("fs");
 var Handlebars = require("handlebars");
+var HandlebarsHelpers = require("handlebars-helpers");
+var multihelpers = HandlebarsHelpers();
+Object.keys(multihelpers).forEach(function (key) {
+    Handlebars.registerHelper(key, multihelpers[key]);
+});
 function generateCode(apiDefinition, generator, dirName) {
     var templateRoot = path_1.join(dirName, 'templates', generator);
     var serviceFiles = createServicesFiles(apiDefinition.paths, templateRoot);

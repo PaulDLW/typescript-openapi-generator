@@ -6,6 +6,13 @@ import {
 import { join, sep } from 'path';
 import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
 import * as Handlebars from 'handlebars';
+import * as HandlebarsHelpers from 'handlebars-helpers';
+
+const multihelpers = HandlebarsHelpers();
+
+Object.keys(multihelpers).forEach(key => {
+  Handlebars.registerHelper(key, multihelpers[key]);
+});
 
 export function generateCode(
   apiDefinition: ApiDefinition,

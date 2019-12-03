@@ -5,7 +5,7 @@ import {
 {{/modelReferences}}
 } from './index'
 
-{{/if}}export interface {{ className }} {
+{{/if}}export interface {{ className }}{{#if extends.length}} extends {{#extends}}{{this}}{{#unless @last}}, {{/unless}}{{/extends}}{{/if}} {
 {{#properties}}
   {{name}}: {{type}};
 {{/properties}}
