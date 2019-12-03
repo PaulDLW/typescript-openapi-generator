@@ -1,11 +1,14 @@
-{{#if modelReferences.length}}
+{{#or modelReferences.length extends.length}}
 import {
 {{#modelReferences}}
   {{this}}{{#unless @last}},{{/unless}}
 {{/modelReferences}}
+{{#extends}}
+  {{this}}{{#unless @last}},{{/unless}}
+{{/extends}}
 } from './index'
 
-{{/if}}export interface {{ className }}{{#if extends.length}} extends {{#extends}}{{this}}{{#unless @last}}, {{/unless}}{{/extends}}{{/if}} {
+{{/or}}export interface {{ className }}{{#if extends.length}} extends {{#extends}}{{this}}{{#unless @last}}, {{/unless}}{{/extends}}{{/if}} {
 {{#properties}}
   {{name}}: {{type}};
 {{/properties}}
