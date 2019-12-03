@@ -23,13 +23,15 @@ export function createPathsFromSwagger2(apiObject: Swagger2): ServiceModel[] {
   const groupedPaths = groupPaths(apiObject.paths);
 
   return Object.keys(groupedPaths).map(
-    (tag): ServiceModel => {
+    (pathName): ServiceModel => {
+      const fileName = `${toKebabCase(pathName)}.data-service`;
+
       return {
-        className: `${toPascalCase(tag)}DataService`,
-        fileName: `services/${toKebabCase(tag)}.data-service.ts`,
-        fileNameNoExt: `${toKebabCase(tag)}.data-service`,
-        paths: groupedPaths[tag],
-        imports: getImports(groupedPaths[tag])
+        className: `${toPascalCase(pathName)}DataService`,
+        fileName: `services/${fileName}.ts`,
+        fileNameNoExt: fileName,
+        paths: groupedPaths[pathName],
+        imports: getImports(groupedPaths[pathName])
       };
     }
   );

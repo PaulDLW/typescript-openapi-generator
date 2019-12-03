@@ -14,13 +14,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var functions_1 = require("../../../../common/functions");
 function createPathsFromSwagger2(apiObject) {
     var groupedPaths = groupPaths(apiObject.paths);
-    return Object.keys(groupedPaths).map(function (tag) {
+    return Object.keys(groupedPaths).map(function (pathName) {
+        var fileName = functions_1.toKebabCase(pathName) + ".data-service";
         return {
-            className: functions_1.toPascalCase(tag) + "DataService",
-            fileName: "services/" + functions_1.toKebabCase(tag) + ".data-service.ts",
-            fileNameNoExt: functions_1.toKebabCase(tag) + ".data-service",
-            paths: groupedPaths[tag],
-            imports: getImports(groupedPaths[tag])
+            className: functions_1.toPascalCase(pathName) + "DataService",
+            fileName: "services/" + fileName + ".ts",
+            fileNameNoExt: fileName,
+            paths: groupedPaths[pathName],
+            imports: getImports(groupedPaths[pathName])
         };
     });
 }

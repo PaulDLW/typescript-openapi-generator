@@ -4,6 +4,7 @@ export const basicOutput = {
       className: 'TestReference',
       extends: [],
       fileName: 'test-reference.model.ts',
+      fileNameNoExt: 'test-reference.model',
       modelReferences: [],
       properties: [],
       type: 'string'
@@ -12,6 +13,7 @@ export const basicOutput = {
       className: 'TestObject',
       extends: [],
       fileName: 'test-object.model.ts',
+      fileNameNoExt: 'test-object.model',
       modelReferences: ['TestReference'],
       properties: [
         {
@@ -38,5 +40,22 @@ export const basicOutput = {
       type: 'object'
     }
   ],
-  paths: []
+  paths: [
+    {
+      className: 'DefaultDataService',
+      fileName: 'services/default.data-service.ts',
+      fileNameNoExt: 'default.data-service',
+      imports: [],
+      paths: [
+        {
+          bodyObject: undefined,
+          endpoint: '/health-check',
+          httpVerb: 'get',
+          methodName: 'getHealthCheck',
+          parameters: [],
+          responseType: 'any'
+        }
+      ]
+    }
+  ]
 };

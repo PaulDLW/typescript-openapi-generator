@@ -23,11 +23,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var functions_1 = require("../../../../common/functions");
 function createApiModelsFromSwagger2(apiObject) {
     var swaggerModels = apiObject.definitions;
-    return Object.keys(swaggerModels).map(function (swaggerModel) {
-        var model = swaggerModels[swaggerModel];
-        var fileName = functions_1.toKebabCase(swaggerModel + ".model");
+    return Object.keys(swaggerModels).map(function (modelName) {
+        var model = swaggerModels[modelName];
+        var fileName = functions_1.toKebabCase(modelName) + ".model";
         return {
-            className: swaggerModel,
+            className: modelName,
             fileName: fileName + ".ts",
             fileNameNoExt: fileName,
             modelReferences: findModelReferences(model),

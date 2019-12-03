@@ -3,6 +3,7 @@ export declare const basicOutput: {
         className: string;
         extends: never[];
         fileName: string;
+        fileNameNoExt: string;
         modelReferences: string[];
         properties: {
             name: string;
@@ -11,5 +12,18 @@ export declare const basicOutput: {
         }[];
         type: string;
     }[];
-    paths: never[];
+    paths: {
+        className: string;
+        fileName: string;
+        fileNameNoExt: string;
+        imports: never[];
+        paths: {
+            bodyObject: undefined;
+            endpoint: string;
+            httpVerb: string;
+            methodName: string;
+            parameters: never[];
+            responseType: string;
+        }[];
+    }[];
 };

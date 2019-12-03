@@ -14,13 +14,13 @@ export function createApiModelsFromSwagger2(apiObject: Swagger2) {
   const swaggerModels = apiObject.definitions;
 
   return Object.keys(swaggerModels).map(
-    (swaggerModel): ApiModel => {
-      const model = swaggerModels[swaggerModel];
+    (modelName): ApiModel => {
+      const model = swaggerModels[modelName];
 
-      const fileName = toKebabCase(`${swaggerModel}.model`);
+      const fileName = `${toKebabCase(modelName)}.model`;
 
       return {
-        className: swaggerModel,
+        className: modelName,
         fileName: `${fileName}.ts`,
         fileNameNoExt: fileName,
         modelReferences: findModelReferences(model),
