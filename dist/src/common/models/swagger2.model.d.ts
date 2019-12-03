@@ -52,6 +52,9 @@ export interface Definition {
     type: DefinitionType;
     properties: DefinitionProperties;
     required: string[];
+    allOf?: [{
+        $ref: string;
+    }];
 }
 export interface Definitions {
     [key: string]: Definition;

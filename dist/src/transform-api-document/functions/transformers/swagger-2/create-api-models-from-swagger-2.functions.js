@@ -31,7 +31,7 @@ function createApiModelsFromSwagger2(apiObject) {
             fileName: fileName + ".ts",
             fileNameNoExt: fileName,
             modelReferences: findModelReferences(model),
-            extends: [],
+            extends: findModelInheritance(model),
             properties: createModelProperties(model),
             type: model.type
         };
@@ -54,6 +54,17 @@ function findModelReferences(model) {
         }
         // remove duplicates
         return __spread(new Set(imports));
+    }, []);
+}
+function findModelInheritance(model) {
+    if (!model.allOf) {
+        return [];
+    }
+    return model.allOf.reduce(function (inherits, allOf) {
+        if (!!allOf.$ref) {
+            inherits.push(functions_1.getModelNameFromFullReference(allOf.$ref));
+        }
+        return inherits;
     }, []);
 }
 function createModelProperties(model) {
