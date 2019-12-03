@@ -1,0 +1,1 @@
+{"version":3,"file":"openapi-3.transformer.js","sourceRoot":"","sources":["../../../../../../src/transform-api-document/functions/transformers/openApi-3/openapi-3.transformer.ts"],"names":[],"mappings":";;AAGA,SAAgB,kBAAkB,CAAC,SAAc;IAC/C,OAAO;QACL,SAAS,EAAE;YACT,OAAO;gBACL,MAAM,EAAE,EAAE;gBACV,KAAK,EAAE,EAAE;aACV,CAAC;QACJ,CAAC;KACF,CAAC;AACJ,CAAC;AATD,gDASC"}

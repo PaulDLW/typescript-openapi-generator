@@ -7,13 +7,13 @@ import {
   ApiParameter,
   ServiceImport,
   Responses
-} from '../../../common/models';
+} from '../../../../common/models';
 import {
   toKebabCase,
   toPascalCase,
   getModelNameFromFullReference,
   toCamelCase
-} from '../../../common/functions';
+} from '../../../../common/functions';
 
 interface GroupedPaths {
   [key: string]: PathModel[];
