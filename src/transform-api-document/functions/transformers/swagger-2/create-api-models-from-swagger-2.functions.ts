@@ -24,7 +24,7 @@ export function createApiModelsFromSwagger2(apiObject: Swagger2) {
         fileName: `${fileName}.ts`,
         fileNameNoExt: fileName,
         modelReferences: findModelReferences(model),
-        extends: [],
+        extends: findModelInheritance(model),
         properties: createModelProperties(model),
         type: model.type
       };
@@ -49,6 +49,19 @@ function findModelReferences(model: Definition) {
     }
     // remove duplicates
     return [...new Set(imports)];
+  }, [] as string[]);
+}
+
+function findModelInheritance(model: Definition) {
+  if (!model.allOf) {
+    return [];
+  }
+
+  return model.allOf.reduce((inherits, allOf) => {
+    if (!!allOf.$ref) {
+      inherits.push(getModelNameFromFullReference(allOf.$ref));
+    }
+    return inherits;
   }, [] as string[]);
 }
 

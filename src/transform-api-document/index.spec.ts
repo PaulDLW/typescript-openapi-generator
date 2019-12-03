@@ -9,7 +9,7 @@ import {
 } from '../test-data';
 
 describe('transformApiDocument', () => {
-  fit('should correctly transform a basic definition for swagger 2.0', () => {
+  it('should correctly transform a basic definition for swagger 2.0', () => {
     const result = transformApiDocument(basicInput);
 
     expect(result).toEqual(basicOutput);

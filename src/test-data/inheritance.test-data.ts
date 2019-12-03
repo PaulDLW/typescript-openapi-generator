@@ -28,17 +28,15 @@ export const inheritanceInput = {
       allOf: [
         {
           $ref: '#/definitions/ErrorModel'
-        },
-        {
-          type: 'object',
-          required: ['rootCause'],
-          properties: {
-            rootCause: {
-              type: 'string'
-            }
-          }
         }
-      ]
+      ],
+      type: 'object',
+      required: ['rootCause'],
+      properties: {
+        rootCause: {
+          type: 'string'
+        }
+      }
     }
   }
 };

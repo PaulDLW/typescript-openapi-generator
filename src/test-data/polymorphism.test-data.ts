@@ -28,41 +28,37 @@ export const polymorphismInput = {
       allOf: [
         {
           $ref: '#/definitions/Pet'
-        },
-        {
-          type: 'object',
-          properties: {
-            huntingSkill: {
-              type: 'string',
-              description: 'The measured skill for hunting',
-              default: 'lazy',
-              enum: ['clueless', 'lazy', 'adventurous', 'aggressive']
-            }
-          },
-          required: ['huntingSkill']
         }
-      ]
+      ],
+      type: 'object',
+      properties: {
+        huntingSkill: {
+          type: 'string',
+          description: 'The measured skill for hunting',
+          default: 'lazy',
+          enum: ['clueless', 'lazy', 'adventurous', 'aggressive']
+        }
+      },
+      required: ['huntingSkill']
     },
     Dog: {
       description: 'A representation of a dog',
       allOf: [
         {
           $ref: '#/definitions/Pet'
-        },
-        {
-          type: 'object',
-          properties: {
-            packSize: {
-              type: 'integer',
-              format: 'int32',
-              description: 'the size of the pack the dog is from',
-              default: 0,
-              minimum: 0
-            }
-          },
-          required: ['packSize']
         }
-      ]
+      ],
+      type: 'object',
+      properties: {
+        packSize: {
+          type: 'integer',
+          format: 'int32',
+          description: 'the size of the pack the dog is from',
+          default: 0,
+          minimum: 0
+        }
+      },
+      required: ['packSize']
     }
   }
 };
