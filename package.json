@@ -1,0 +1,30 @@
+{
+  "name": "typescript-openapi-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "bin": {
+    "tcg": "./dist/main.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "tsc --project tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.5.3",
+    "handlebars-helpers": "^0.10.0",
+    "js-yaml": "^3.13.1",
+    "yargs": "^15.0.2"
+  },
+  "devDependencies": {
+    "@types/handlebars-helpers": "^0.5.2",
+    "@types/js-yaml": "^3.12.1",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  }
+}
