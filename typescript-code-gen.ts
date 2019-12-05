@@ -19,8 +19,10 @@ export function typescriptCodeGen(
   }
 
   const apiRawObject = safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+
   const apiDefinition = transformApiDocument(apiRawObject);
   const codeGennedFiles = generateCode(apiDefinition, generator, dirName);
+
   const outputPath = join(cwd, outputDir);
 
   if (!fs.existsSync(outputPath)) {
@@ -30,9 +32,11 @@ export function typescriptCodeGen(
   codeGennedFiles.forEach(codeGennedFile => {
     const directory = dirname(codeGennedFile.name);
     const subDir = join(outputPath, directory);
+
     if (!fs.existsSync(subDir)) {
       fs.mkdirSync(subDir, { recursive: true });
     }
+
     fs.writeFileSync(
       join(outputPath, codeGennedFile.name),
       codeGennedFile.content
