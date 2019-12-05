@@ -1,27 +1,26 @@
 name: Node CI
 
-on: 
+on:
   pull_request:
     types: [closed]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: npm install, build, and test
-      if: github.event.pull_request.merged == true
-      run: |
-        npm ci
-        npm run build
-        npm test
-      env:
-        CI: true
-    - name: NPM publish if not present
-      uses: romainseb/action-npm-publish-if-not-present@0.0.2
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install, build, and test
+        if: github.event.pull_request.merged == true
+        run: |
+          npm ci
+          npm run build
+          npm test
+        env:
+          CI: true
+      - name: Publish to npm
+        uses: pascalgn/npm-publish-action@1.1.0
