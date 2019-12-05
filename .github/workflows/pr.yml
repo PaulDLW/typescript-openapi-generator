@@ -12,14 +12,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install, test, and build
       run: |
-        echo ${{ github.head_ref }}
-        echo ${{ github.payload.pull_request.head.ref }}
         npm ci
         npm run build
         npm test
