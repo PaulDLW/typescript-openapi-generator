@@ -20,7 +20,7 @@ jobs:
           npm ci
           npm run build
           npm test
+          npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+          npm publish
         env:
           CI: true
-      - name: Publish to npm
-        uses: pascalgn/npm-publish-action@1.1.0
