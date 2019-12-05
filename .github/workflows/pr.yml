@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.payload.pull_request.head.ref, 'master')
+    if: contains(github.payload.pull_request.head.ref, 'master') == false
     
     strategy:
       matrix:
