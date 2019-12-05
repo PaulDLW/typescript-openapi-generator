@@ -14,13 +14,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+          registry-url: 'https://registry.npmjs.org'
       - name: npm install, build, and test
         if: github.event.pull_request.merged == true
         run: |
           npm ci
           npm run build
           npm test
-          npm config set '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
-          npm publish
         env:
           CI: true
+      - name: npm install
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
