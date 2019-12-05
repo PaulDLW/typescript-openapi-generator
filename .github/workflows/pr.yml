@@ -1,11 +1,13 @@
 name: Node PR
 
-on: [push]
+on: 
+  push:
+     branches-ignore: 
+       - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: true == true
     
     strategy:
       matrix:
@@ -13,10 +15,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
