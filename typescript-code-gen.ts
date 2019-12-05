@@ -19,8 +19,10 @@ export function typescriptCodeGen(
   }
 
   const apiRawObject = safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+
   const apiDefinition = transformApiDocument(apiRawObject);
   const codeGennedFiles = generateCode(apiDefinition, generator, dirName);
+
   const outputPath = join(cwd, outputDir);
 
   if (!fs.existsSync(outputPath)) {
