@@ -23,3 +23,5 @@ jobs:
         npm test
       env:
         CI: true
+    - name: NPM publish if not present
+      uses: romainseb/action-npm-publish-if-not-present@0.0.2
