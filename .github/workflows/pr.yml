@@ -5,14 +5,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    if: contains(github.payload.pull_request.head.ref, 'master')
+    
     strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
     - uses: actions/checkout@v1
-      if:  contains(github.payload.pull_request.head.ref, 'master')
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
