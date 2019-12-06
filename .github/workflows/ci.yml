@@ -23,7 +23,12 @@ jobs:
           npm test
         env:
           CI: true
-      - name: npm install
+      - name: semantic release
+        run: npm publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: npm publish
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
