@@ -12,7 +12,22 @@ function typescriptCodeGen(apiFile, outputDir, generator, dirName) {
         console.error('Cannot load the provided api file');
         return;
     }
-    var apiRawObject = js_yaml_1.safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+    var extension = apiFileLocation.split('.').pop();
+    var apiRawObject = null;
+    switch (extension) {
+        case 'json':
+            apiRawObject = JSON.parse(fs.readFileSync(apiFileLocation, 'utf8'));
+            break;
+        case 'yaml':
+            apiRawObject = js_yaml_1.safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+            break;
+        case 'yml':
+            apiRawObject = js_yaml_1.safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+            break;
+        default:
+            console.error('File provided is not a json or a yaml/yml file');
+            return;
+    }
     var apiDefinition = transform_api_document_1.transformApiDocument(apiRawObject);
     var codeGennedFiles = generate_code_1.generateCode(apiDefinition, generator, dirName);
     var outputPath = path_1.join(cwd, outputDir);
