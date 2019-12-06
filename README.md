@@ -8,7 +8,7 @@ However if you have an API specification file that hasn't been correctly parsed 
 
 This project is inspired by the amazing work that the [OpenAPITools](https://github.com/OpenAPITools/openapi-generator) devs have done.
 
-However my own experiences with trying to modify the generators was frustrating and over complex.
+However my own experiences with trying to modify the generators was frustrating and overly complex.
 I wanted to create something that just focused on generating Typescript I could remove a lot of the complexity for scaffolding files.
 
 ## Installation
