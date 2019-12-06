@@ -18,7 +18,24 @@ export function typescriptCodeGen(
     return;
   }
 
-  const apiRawObject = safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+  const extension = apiFileLocation.split('.').pop();
+
+  let apiRawObject = null;
+
+  switch (extension) {
+    case 'json':
+      apiRawObject = JSON.parse(fs.readFileSync(apiFileLocation, 'utf8'));
+      break;
+    case 'yaml':
+      apiRawObject = safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+      break;
+    case 'yml':
+      apiRawObject = safeLoad(fs.readFileSync(apiFileLocation, 'utf8'));
+      break;
+    default:
+      console.error('File provided is not a json or a yaml/yml file');
+      return;
+  }
 
   const apiDefinition = transformApiDocument(apiRawObject);
   const codeGennedFiles = generateCode(apiDefinition, generator, dirName);
