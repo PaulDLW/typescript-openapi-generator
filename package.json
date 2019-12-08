@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "",
   "main": "index.ts",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "tcg": "./dist/main.js"
   },
