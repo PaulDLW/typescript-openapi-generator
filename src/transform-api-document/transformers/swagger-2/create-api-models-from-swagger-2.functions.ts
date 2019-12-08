@@ -3,12 +3,12 @@ import {
   ApiModel,
   Definition,
   ApiModelProperties
-} from '../../../../common/models';
+} from '../../../common/models';
 
 import {
   toKebabCase,
   getModelNameFromFullReference
-} from '../../../../common/functions';
+} from '../../../common/functions';
 
 export function createApiModelsFromSwagger2(apiObject: Swagger2) {
   const swaggerModels = apiObject.definitions;
