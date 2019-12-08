@@ -1,6 +1,6 @@
 {
   "name": "typescript-openapi-generator",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.ts",
   "files": [
