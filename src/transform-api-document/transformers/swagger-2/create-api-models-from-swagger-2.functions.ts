@@ -7,7 +7,8 @@ import {
 
 import {
   toKebabCase,
-  getModelNameFromFullReference
+  getModelNameFromFullReference,
+  mapType
 } from '../../../common/functions';
 
 export function createApiModelsFromSwagger2(apiObject: Swagger2) {
@@ -87,17 +88,17 @@ function createModelProperties(model: Definition) {
             type: `${getModelNameFromFullReference(property.items.$ref)}[]`,
             required: isRequired(model, propertyName)
           });
-        } else {
+        } else if (!!property.items.type) {
           properties.push({
             name: propertyName,
-            type: `${property.items.type}[]`,
+            type: `${mapType(property.items.type)}[]`,
             required: isRequired(model, propertyName)
           });
         }
       } else if (!!property.type) {
         properties.push({
           name: propertyName,
-          type: property.type,
+          type: mapType(property.type),
           required: isRequired(model, propertyName)
         });
       }

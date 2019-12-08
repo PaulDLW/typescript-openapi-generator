@@ -12,7 +12,8 @@ import {
   toKebabCase,
   toPascalCase,
   getModelNameFromFullReference,
-  toCamelCase
+  toCamelCase,
+  mapType
 } from '../../../common/functions';
 
 interface GroupedPaths {
@@ -42,37 +43,43 @@ function getImports(paths: PathModel[]) {
 
   paths.forEach(path => {
     path.parameters.forEach(parameter => {
-      if (
-        parameter.type !== 'string' &&
-        parameter.type !== 'number' &&
-        parameter.type !== 'boolean' &&
-        parameter.type !== 'array' &&
-        parameter.type !== 'object' &&
-        parameter.type !== 'any'
-      ) {
-        imports.push({ name: parameter.type, path: '../models' });
+      const parameterType = removeBrackets(parameter.type);
+
+      if (shouldIncludeTypeInImports(parameterType)) {
+        imports.push({
+          name: parameterType,
+          path: '../models'
+        });
       }
     });
 
-    // remove array brackets if they exist
-    const responseType = path.responseType
-      .replace(/\[/g, '')
-      .replace(/\]/g, '');
+    const responseType = removeBrackets(path.responseType);
 
-    if (
-      responseType !== 'string' &&
-      responseType !== 'number' &&
-      responseType !== 'boolean' &&
-      responseType !== 'array' &&
-      responseType !== 'object' &&
-      responseType !== 'any'
-    ) {
+    if (shouldIncludeTypeInImports(responseType)) {
       imports.push({ name: responseType, path: '../models' });
     }
   });
 
   return imports.filter(
     (thing, index, self) => self.findIndex(t => t.name === thing.name) === index
+  );
+}
+
+function removeBrackets(typeImport: string) {
+  return typeImport.replace(/\[/g, '').replace(/\]/g, '');
+}
+
+function shouldIncludeTypeInImports(type: string) {
+  return (
+    type !== 'string' &&
+    type !== 'number' &&
+    type !== 'boolean' &&
+    type !== 'array' &&
+    type !== 'object' &&
+    type !== 'file' &&
+    type !== 'any' &&
+    type !== 'Blob' &&
+    !type.includes('key:')
   );
 }
 
@@ -130,20 +137,35 @@ function getResponseType(responses: Responses) {
     if (key.charAt(0) === '2') {
       const response = responses[key];
 
-      if (!!response.type) {
-        responseType = response.type;
+      const mappedType = response.type;
+
+      if (!!mappedType) {
+        responseType = mappedType;
       } else if (!!response.schema) {
         if (!!response.schema.items) {
           responseType = `${getModelNameFromFullReference(
             response.schema.items.$ref
           )}[]`;
         } else {
-          responseType = getModelNameFromFullReference(response.schema.$ref);
+          if (!!response.schema.type) {
+            responseType = response.schema.type;
+
+            if (
+              response.schema.type === 'object' &&
+              !!response.schema.additionalProperties
+            ) {
+              responseType = `{ [key: string]: ${mapType(
+                response.schema.additionalProperties.type
+              )}; }`;
+            }
+          } else {
+            responseType = getModelNameFromFullReference(response.schema.$ref);
+          }
         }
       }
     }
 
-    return responseType;
+    return mapType(responseType);
   }, 'any');
 }
 
@@ -155,14 +177,26 @@ function mapParameters(parameters: Parameter[]): ApiParameter[] {
   return parameters.map(parameter => {
     let paramType = parameter.type;
 
-    if (!paramType && !!parameter.schema) {
-      paramType = getModelNameFromFullReference(parameter.schema.$ref);
+    if (!!paramType) {
+      if (!!parameter.items) {
+        paramType = `${mapType(parameter.items.type)}[]`;
+      } else if (paramType === 'file') {
+        paramType = 'Blob';
+      }
+    } else if (!!parameter.schema) {
+      if (!!parameter.schema.items) {
+        paramType = `${getModelNameFromFullReference(
+          parameter.schema.items.$ref
+        )}[]`;
+      } else {
+        paramType = getModelNameFromFullReference(parameter.schema.$ref);
+      }
     }
 
     return {
       ...parameter,
       name: toCamelCase(parameter.name),
-      type: paramType
+      type: mapType(paramType)
     };
   });
 }

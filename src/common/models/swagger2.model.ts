@@ -9,12 +9,23 @@ export interface Parameter {
   in: string;
   required: boolean;
   type: string;
-  schema: { $ref: string };
+  items: { type: string };
+  schema: {
+    type: string;
+    $ref: string;
+    items: { $ref: string };
+    additionalProperties: { type: string };
+  };
 }
 
 export interface Response {
   type: string;
-  schema: { $ref: string; items: { $ref: string } };
+  schema: {
+    type: string;
+    $ref: string;
+    items: { $ref: string };
+    additionalProperties: { type: string };
+  };
 }
 
 export interface Responses {
