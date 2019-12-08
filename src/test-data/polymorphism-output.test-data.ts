@@ -45,7 +45,7 @@ export const polymorphismOutput = {
         {
           name: 'packSize',
           required: true,
-          type: 'integer'
+          type: 'number'
         }
       ],
       type: 'object'

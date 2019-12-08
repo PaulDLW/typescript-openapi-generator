@@ -15,7 +15,7 @@ export const inheritanceOutput = {
         {
           name: 'code',
           required: true,
-          type: 'integer'
+          type: 'number'
         }
       ],
       type: 'object'
