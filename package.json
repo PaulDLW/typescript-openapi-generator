@@ -2,6 +2,7 @@
   "name": "typescript-openapi-generator",
   "version": "1.0.0",
   "description": "",
+  "repository": "github:PaulDLW/typescript-openapi-generator",
   "main": "index.ts",
   "files": [
     "dist"
@@ -24,7 +25,12 @@
         }
       ],
       "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog"
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ]
     ]
   },
   "husky": {
